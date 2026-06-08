@@ -31,6 +31,32 @@ Rhabit turns your daily habits into a progression system. Complete tasks within 
 - Node.js + Express
 - SQLite via better-sqlite3
 - Timezone-aware daily resets via Intl API
+## API Endpoints
+
+The backend provides the following REST endpoints:
+
+### User
+- `GET /api/user` - Get current user profile (username, XP, level)
+- `POST /api/user/setup` - Initialize user account on first run
+
+### Goals (Pathways)
+- `GET /api/goals` - Get all goal pathways
+- `POST /api/goals` - Create a new goal pathway
+- `PUT /api/goals/:id` - Update a specific goal (XP, level, tasks)
+- `DELETE /api/goals/:id` - Delete a goal pathway
+
+### Daily Tasks
+- `GET /api/daily/tasks` - Get today's tasks for active goal
+- `POST /api/daily/complete/:taskId` - Mark a task as completed
+- `POST /api/daily/refresh/:taskId` - Swap a task (costs 5 XP)
+- `GET /api/daily/window` - Get remaining time in current daily window
+
+### Penalty System
+- `GET /api/penalty/active` - Check if penalty is active
+- `POST /api/penalty/complete` - Complete penalty challenge
+- `POST /api/penalty/fail` - Process penalty failure (lose 45 XP)
+
+All endpoints return JSON responses. The server runs on `http://localhost:3001` by default.
 
 ## Project Structure
 Rhabit/
@@ -152,6 +178,12 @@ On first launch you will be taken to the setup page where you enter your usernam
 - Single-user application designed for personal use
 - Data stored locally in SQLite and is not included in the repository
 - Portfolio project demonstrating React, Node.js/Express, SQLite, and full-stack integration
+  
+## Security & Deployment Notes
+
+- **CORS**: Currently configured for local development (frontend on port 5173). For production deployment with separate frontend/backend domains, implement proper CORS restrictions.
+- **Database**: SQLite is used for local storage. For cloud deployment, consider migrating to PostgreSQL or MySQL.
+- **Environment Variables**: No external API keys required. The app runs entirely locally.
 
 ## License
 
